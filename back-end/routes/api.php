@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,14 +28,29 @@ Route::group(
     ],
     function () {
 
-        // Category routes 
+        // dashboard routes 
         Route::group(
             [
                 'prefix' => 'dashboard',
             ],
             function () {
-                Route::apiResource('categories', CategoryController::class);
+                Route::apiResource('categories', CategoryController::class)->middleware(['auth:sanctum','AdminMiddleware']);
+                Route::apiResource('products', ProductController::class);//->middleware(['auth:sanctum','AdminMiddleware']);
             }
         );
+
+
+
+        Route::group(
+            [
+                'prefix' => 'site',
+            ],
+            function () {
+                Route::post('register', 'AuthController@UserRegister');
+                Route::post('login', 'AuthController@UserLogin');
+            }
+        );
+
+
     }
 );

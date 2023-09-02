@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Storage;
 
 class ProductController extends Controller
 {
@@ -15,6 +18,12 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $products = Product::all();
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"All Products",
+            "data"=>$products
+        ]);
     }
 
     /**
@@ -23,9 +32,14 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        //
+        $product = $request->createProduct();
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Product created successfully",
+            "data"=>$product
+        ]);
     }
 
     /**
@@ -34,9 +48,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::find($id);
+        if(empty($product)) return response()->json(["error"=>"not exist id"]);
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Product get successfully",
+            "data"=>$product
+        ]);
     }
 
     /**
@@ -46,9 +66,17 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
         //
+        // $old = Product::find($id);
+        // if(empty($old)) return response()->json(["error"=>"not exist id"]);
+        $Product = $request->updateProduct($id);
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Product Updated successfully",
+            "data"=>$Product
+        ]);
     }
 
     /**
@@ -57,8 +85,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        // $image = Storage::disk('public')->get($imagePath);
+        $Product = Product::findOrFail($id);
+        Storage::disk('public')->delete('images/'.$Product['image']);
+        $Product->delete();
+
+        return response()->json([
+            'message' => 'Product deleted successfully',
+        ]);
     }
 }

@@ -26,6 +26,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             //
+            'id' => 'required|integer|exists:categories,id',
             'name' => 'string|max:100|unique:categories,name,'. $this->id,
         ];
     }

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category');  //foreign key
+            $table->unsignedBigInteger('category_id');  //foreign key
             $table->string('name');
             $table->string('description');
             $table->float('price');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Relations
-            $table->foreign('category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade'); 
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade'); 
         });
     }
 

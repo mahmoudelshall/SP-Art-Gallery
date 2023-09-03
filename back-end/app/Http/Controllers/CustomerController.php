@@ -15,6 +15,12 @@ class CustomerController extends Controller
     public function index()
     {
         //
+        $Customers = Customer::all();
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"All Customers",
+            "data"=>$Customers
+        ]);
     }
 
     /**

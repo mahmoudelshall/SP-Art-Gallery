@@ -28,14 +28,28 @@ Route::group(
     ],
     function () {
 
-        // dashboard routes 
+        // dashboard or admin  routes 
         Route::group(
             [
                 'prefix' => 'dashboard',
             ],
             function () {
+                // auth
+                Route::post('login', 'AuthController@AdminLogin');
+                Route::get('logout', 'AuthController@logout')->middleware(['auth:sanctum','AdminMiddleware']);
+
+
+                // categories
                 Route::apiResource('categories', CategoryController::class)->middleware(['auth:sanctum','AdminMiddleware']);
-                Route::apiResource('products', ProductController::class);//->middleware(['auth:sanctum','AdminMiddleware']);
+
+                // products
+                Route::apiResource('products', ProductController::class)->middleware(['auth:sanctum','AdminMiddleware']);
+                Route::get('products/search/{name}', 'ProductController@searchName');
+                
+                // customers
+                Route::apiResource('customers', CustomerController::class)->only('index')->middleware(['auth:sanctum','AdminMiddleware']);
+
+
             }
         );
 
@@ -46,8 +60,11 @@ Route::group(
                 'prefix' => 'site',
             ],
             function () {
+
+                // Auth 
                 Route::post('register', 'AuthController@UserRegister');
                 Route::post('login', 'AuthController@UserLogin');
+                Route::get('logout', 'AuthController@logout')->middleware('auth:sanctum'); 
             }
         );
 

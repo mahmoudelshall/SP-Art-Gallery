@@ -13,7 +13,7 @@ class AdminLoginRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,29 @@ class AdminLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string',
         ];
+    }
+
+    public function AdminLogin()
+    {
+        $credentials = $this->only('email', 'password');
+        
+        try {
+            $auth = auth()->attempt($credentials);
+
+            if (!$auth) throw new \Exception('Invalid credentials');
+            if (auth()->user()->roles!=="admin") throw new \Exception('Invalid admin user');
+
+            return [
+                'token' => auth()->user()->createToken('auth_token')->plainTextToken,
+            ];
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 401);
+        }
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('customer_email');
             $table->string('customer_phone');
             $table->string('customer_address');
-            $table->enum('status',['0','1']);
+            $table->enum('status',['new','cancelled','completed'])->default('new');
             $table->timestamp('date');
             $table->float('total');
             $table->timestamps();

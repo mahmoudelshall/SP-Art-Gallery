@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Order\CreateOrderRequest;
+use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Order_Products;
 use Illuminate\Http\Request;
@@ -30,9 +32,14 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOrderRequest $request)
     {
-        //
+        $order = $request->createOrder();
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Order created successfully",
+            "data"=>$order
+        ]);
     }
 
     /**
@@ -62,9 +69,14 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(UpdateOrderRequest $request, $id)
     {
-        //
+        $Order = $request->updateOrder($id);
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Order Updated successfully",
+            "data"=>$Order
+        ]);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,9 @@ Route::group(
                 
                 // customers
                 Route::apiResource('customers', CustomerController::class)->only('index')->middleware(['auth:sanctum','AdminMiddleware']);
+
+                // orders
+                Route::apiResource('orders', OrderController::class)->middleware(['auth:sanctum','AdminMiddleware']);
 
 
             }

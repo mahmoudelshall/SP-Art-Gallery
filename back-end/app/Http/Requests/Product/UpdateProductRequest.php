@@ -33,7 +33,7 @@ class UpdateProductRequest extends FormRequest
             'stock' => 'integer',
             'description' => 'string',
             'status' => 'boolean',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|max:2048',// mimes:jpeg,png,jpg,gif|
 
         ];
       

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Order\CreateOrderRequest;
-use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Order_Products;
 use Carbon\Carbon;
@@ -45,8 +43,6 @@ class OrderController extends Controller
                 'customer_email' => 'required|email',
                 'customer_phone' => 'required|string|regex:/^[0-9]{11}$/',
                 'customer_address' => 'required|string|max:255',
-               // 'status' => 'required|in:new,cancelled,completed',
-                //'price' => 'required|numeric',
                 //products validation
                 'products' => 'required|array',
                 'products.*.id' => 'required|integer|max:100|exists:products,id',
@@ -102,13 +98,18 @@ class OrderController extends Controller
     public function show($id)
     {
         $Order = Order::find($id);
-        if(empty($Order)) return response()->json(["error"=>"not exist id"]);
+        if(empty($Order)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400);
         $orderProducts = Order_Products::where(['order_id' => $id] )->get();
         $Order['products'] =$orderProducts ;
- 
         return response()->json([
-            "status"=>"ok",
-            "message"=>"Product get successfully",
+            "status"=>true,
+            "message"=>"Order get successfully",
+            "errors"=>null,
             "data"=>$Order
         ]);
     }
@@ -120,12 +121,23 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, $id)
+    public function update(Request $request, $id) 
     {
-        $Order = $request->updateOrder($id);
+        $validator=$request->validate([
+            'status' => 'required|in:new,cancelled,completed',
+        ]);  
+        $Order = Order::find($id);
+        if(empty($Order)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400);
+        $Order->update([ 'status' =>$request->status ]);
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"Order Updated successfully",
+            "errors"=>null,
             "data"=>$Order
         ]);
     }

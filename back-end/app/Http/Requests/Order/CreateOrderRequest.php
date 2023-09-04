@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateOrderRequest extends FormRequest
@@ -34,12 +35,25 @@ class CreateOrderRequest extends FormRequest
             //products validation
             'products' => 'required|array',
             'products.*.id' => 'required|integer|max:100|exists:products,id',
-            'products.*.product_quantity' =>'required|min:1',
-            'products.*.product_price'=>'required|numeric',
-            'products.*.product_subTotal'=>'required|numeric',
+            'products.*.quantity' =>'required|min:1',
+            'products.*.price'=>'required|numeric',
+            'products.*.subTotal'=>'required|numeric',
             'products.*.description'=>'string|max:255',
         ];
     }
+
+    public function createOrder()
+        {
+                    //    $order = Order::create([
+                    //            "user_id" =>$this->input('user'),
+                    //                ]);
+                       dd($this);
+            return Order::create([
+                'name' => $this->name
+            ]);
+        }
+
+
 }
 
 //$table->timestamp('date');
@@ -49,3 +63,8 @@ $table->unsignedBigInteger('product_id');  //foreign key
             $table->float('product_price');
             $table->float('product_subTotal');
             $table->integer('product_quantity');
+
+
+
+
+    

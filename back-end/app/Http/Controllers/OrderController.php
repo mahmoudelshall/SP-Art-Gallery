@@ -6,6 +6,7 @@ use App\Http\Requests\Order\CreateOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Order_Products;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -32,14 +33,60 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateOrderRequest $request)
+    public function store(Request $request)
     {
-        $order = $request->createOrder();
-        return response()->json([
-            "status"=>"ok",
-            "message"=>"Order created successfully",
-            "data"=>$order
-        ]);
+        
+        
+        //validetor request
+            $validator=$request->validate([
+                'customer_id' => 'required|integer|max:100|exists:customers,id',
+                'customer_name' => 'required|string|max:100',
+                'customer_email' => 'required|email',
+                'customer_phone' => 'required|string|regex:/^[0-9]{10}$/',
+                'customer_address' => 'required|string|max:255',
+               // 'status' => 'required|in:new,cancelled,completed',
+                //'price' => 'required|numeric',
+                //products validation
+                'products' => 'required|array',
+                'products.*.id' => 'required|integer|max:100|exists:products,id',
+                'products.*.quantity' =>'required|min:1',
+                'products.*.price'=>'required|numeric',
+                'products.*.subTotal'=>'required|numeric',
+                'products.*.description'=>'string|max:255',
+
+            ]);  
+            $total = 0;
+            foreach($request->products as $product){
+                $total = $total + ($product['price']*$product['quantity']);
+            } 
+           $order =  Order::create([
+                'customer_id' => $request->customer_id,
+                'customer_name' => $request->customer_name,
+                'customer_email' => $request->customer_email,
+                'customer_phone' => $request->customer_phone,
+                'customer_address' => $request->customer_address,
+                'date' => Carbon::now()->toDateTimeString(),
+                'total' =>  $total,
+            ]);
+
+            $Order_Products = [];
+            foreach($request->products as $product){
+                $Order_Products[] = Order_Products::create([
+                        'order_id' => $order['id'],
+                        'product_id' =>$product['id'],
+                        'description' => $product['description'],
+                        'product_price' => $product['price'],
+                        'product_subTotal' => $product['subTotal'],
+                        'product_quantity' => $product['quantity'],
+                    ]);
+            } 
+            $order['products'] = $Order_Products;
+            return response()->json([
+                "status"=>"ok",
+                "message"=>"Order created successfully",
+                "data"=>$order
+            ]);
+       
     }
 
     /**

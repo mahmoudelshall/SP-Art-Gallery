@@ -22,6 +22,7 @@ class OrderController extends Controller
         return response()->json([
             "status"=>"ok",
             "message"=>"All Orders",
+            "errors"=>null,
             "data"=>$Orders
         ]);
     }
@@ -33,9 +34,7 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
-        
+    { 
         //validetor request
             $validator=$request->validate([
                 'customer_id' => 'required|integer|max:100|exists:customers,id',

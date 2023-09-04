@@ -20,8 +20,9 @@ class ProductController extends Controller
         //
         $products = Product::all();
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"All Products",
+            "errors"=>null,
             "data"=>$products
         ]);
     }
@@ -36,8 +37,9 @@ class ProductController extends Controller
     {
         $product = $request->createProduct();
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"Product created successfully",
+            "errors"=>null,
             "data"=>$product
         ]);
     }
@@ -51,10 +53,17 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        if(empty($product)) return response()->json(["error"=>"not exist id"]);
+        if(empty($product))  return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400); 
+
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"Product get successfully",
+            "errors"=>null,
             "data"=>$product
         ]);
     } 
@@ -64,8 +73,9 @@ class ProductController extends Controller
     {
         $products = Product::where('name','like',"%$name%")->get(); 
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"Product get successfully",
+            "errors"=>null,
             "data"=>$products
         ]);
     }
@@ -84,7 +94,7 @@ class ProductController extends Controller
         // if(empty($old)) return response()->json(["error"=>"not exist id"]);
         $Product = $request->updateProduct($id);
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"Product Updated successfully",
             "data"=>$Product
         ]);

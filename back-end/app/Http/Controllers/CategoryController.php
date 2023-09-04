@@ -17,8 +17,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
-        return CategoryResource::collection($category);
+        $Categories = Category::all();
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"All Categories",
+            "errors"=>null,
+            "data"=>CategoryResource::collection($Categories)
+        ]);
     }
 
     /**
@@ -30,7 +35,13 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $category = $request->createCategory();
-        return new CategoryResource($category);
+        return response()->json([
+            "status"=>"ok",
+            "message"=>"Category created successfully",
+            "errors" => null,
+            "data"=>CategoryResource::make($category)
+        ]);
+        
     }
     /**
      * Display the specified resource.
@@ -41,8 +52,22 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
-        if(empty($category)) return response()->json(["error"=>"not exist id"]);
-        return new CategoryResource($category);
+        if(empty($category)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400); 
+        
+        return response()->json([
+            "status"=>true,
+            "message"=>"Category get successfully",
+            "errors"=>null,
+            "data"=>CategoryResource::make($category)
+        ]);
+
+        //return response()->json(["error"=>"not exist id"]);
+        //return new CategoryResource($category);
 
     }
 
@@ -53,10 +78,31 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $category = $request->updateCategory($id);
-        return new CategoryResource($category);
+        $validator=$request->validate([
+            'name' => 'string|max:100|unique:categories,name,'. $id,
+
+        ]);  
+
+        $Category = Category::find($id);
+        if(empty($Category)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400);
+
+        $Category->update([ 'status' =>$request->status ]);
+
+        return response()->json([
+            "status"=>true,
+            "message"=>"Category Updated successfully",
+            "errors"=>null,
+            "data"=>CategoryResource::make($Category)
+        ]);
+       // $category = $request->updateCategory($id);
+        //return new CategoryResource($category);
     }
     /**
      * Remove the specified resource from storage.
@@ -66,11 +112,20 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+        $category = Category::find($id);
+        if(empty($category)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400); 
 
+        $category->delete();
         return response()->json([
-            'message' => 'Category deleted successfully',
-        ]);
+            "status"=>true,
+            "message"=>"Category deleted successfully",
+            "errors"=>null,
+            "data"=>null
+        ]); 
     }
 }

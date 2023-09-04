@@ -19,6 +19,7 @@ class CustomerController extends Controller
         return response()->json([
             "status"=>"ok",
             "message"=>"All Customers",
+            "errors"=>null,
             "data"=>$Customers
         ]);
     }

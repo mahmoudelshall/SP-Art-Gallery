@@ -87,15 +87,52 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        //
-        // $old = Product::find($id);
-        // if(empty($old)) return response()->json(["error"=>"not exist id"]);
-        $Product = $request->updateProduct($id);
+        $validator=$request->validate([
+            'name' => 'string|max:100|unique:products,name,'. $id,
+            'category_id' => 'integer|max:100|exists:categories,id',
+            'price' => 'numeric',
+            'stock' => 'integer',
+            'description' => 'string',
+            'status' => 'boolean',
+            'image' => 'image|max:2048',// mimes:jpeg,png,jpg,gif|
+
+        ]);  
+
+        $Product = Product::find($id);
+        if(empty($Product)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],400);
+
+        $imageFile = @$request->file('image');
+        if (isset($imageFile)) {
+            // Generate a unique name for the image file
+            $imageName = uniqid() . '.' . $imageFile->getClientOriginalExtension();
+            // Save the image file
+            $imageFile->storeAs('public/images', $imageName);
+            // delete old image
+            Storage::disk('public')->delete('images/' . $Product['image']);
+        }
+
+
+        $Product->update([
+            'name' => isset($request->name) ? $request->name : $Product['name'],
+            'category_id' => isset($request->category_id) ? $request->category_id : $Product['category_id'],
+            'price' => isset($request->price) ? $request->price : $Product['price'],
+            'stock' => isset($request->stock) ? $request->stock : $Product['stock'],
+            'description' => isset($request->description) ? $request->description : $Product['description'],
+            'status' => isset($request->status) ? $request->status : $Product['status'],
+            'image' => isset($request->image) ? $imageName : $Product['image'],
+         ]);
+
         return response()->json([
             "status"=>true,
             "message"=>"Product Updated successfully",
+            "errors"=>null,
             "data"=>$Product
         ]);
     }
@@ -108,13 +145,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        // $image = Storage::disk('public')->get($imagePath);
-        $Product = Product::findOrFail($id);
+
+        $Product = Product::find($id);
+        if(empty($Product)) return response()->json([
+            "status"=>false,
+            "message"=>"not exist id",
+            "errors"=>"not exist id",
+            "data"=>null
+        ],404); 
         Storage::disk('public')->delete('images/'.$Product['image']);
         $Product->delete();
-
         return response()->json([
-            'message' => 'Product deleted successfully',
-        ]);
+            "status"=>true,
+            "message"=>"Product deleted successfully",
+            "errors"=>null,
+            "data"=>null
+        ]); 
     }
 }

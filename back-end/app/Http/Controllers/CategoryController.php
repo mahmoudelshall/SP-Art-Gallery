@@ -40,7 +40,7 @@ class CategoryController extends Controller
             "message"=>"Category created successfully",
             "errors" => null,
             "data"=>CategoryResource::make($category)
-        ]);
+        ],201);
         
     }
     /**
@@ -57,7 +57,7 @@ class CategoryController extends Controller
             "message"=>"not exist id",
             "errors"=>"not exist id",
             "data"=>null
-        ],400); 
+        ],404); 
         
         return response()->json([
             "status"=>true,
@@ -91,7 +91,7 @@ class CategoryController extends Controller
             "message"=>"not exist id",
             "errors"=>"not exist id",
             "data"=>null
-        ],400);
+        ],404);
 
         $Category->update([ 'status' =>$request->status ]);
 
@@ -118,7 +118,7 @@ class CategoryController extends Controller
             "message"=>"not exist id",
             "errors"=>"not exist id",
             "data"=>null
-        ],400); 
+        ],404); 
 
         $category->delete();
         return response()->json([

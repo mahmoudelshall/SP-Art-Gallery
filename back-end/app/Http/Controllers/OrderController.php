@@ -20,7 +20,7 @@ class OrderController extends Controller
         //  $Orders = Order::all();
         $Orders = Order::orderBy('id', 'desc')->paginate(2);
         return response()->json([
-            "status"=>"ok",
+            "status"=>true,
             "message"=>"All Orders",
             "errors"=>null,
             "data"=>$Orders
@@ -81,10 +81,11 @@ class OrderController extends Controller
            // DB::commit();
             $order['products'] = $Order_Products;
             return response()->json([
-                "status"=>"ok",
+                "status"=>true,
                 "message"=>"Order created successfully",
+                "errors" =>null,
                 "data"=>$order
-            ]);
+            ],201);
        
     }
 
@@ -102,7 +103,7 @@ class OrderController extends Controller
             "message"=>"not exist id",
             "errors"=>"not exist id",
             "data"=>null
-        ],400);
+        ],404);
         $orderProducts = Order_Products::where(['order_id' => $id] )->get();
         $Order['products'] =$orderProducts ;
         return response()->json([
@@ -112,6 +113,18 @@ class OrderController extends Controller
             "data"=>$Order
         ]);
     }
+
+      //searchName
+      public function searchNumber($number)
+      {
+          $Orders = Order::where('id','like',"%$number%")->get(); 
+          return response()->json([
+              "status"=>true,
+              "message"=>"Orders get successfully",
+              "errors"=>null,
+              "data"=>$Orders
+          ]);
+      }
 
     /**
      * Update the specified resource in storage.
@@ -131,7 +144,7 @@ class OrderController extends Controller
             "message"=>"not exist id",
             "errors"=>"not exist id",
             "data"=>null
-        ],400);
+        ],404);
         $Order->update([ 'status' =>$request->status ]);
         return response()->json([
             "status"=>true,

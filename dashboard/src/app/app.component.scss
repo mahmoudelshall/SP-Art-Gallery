@@ -3,4 +3,35 @@
     height: 100%;
     border: 1px solid #555;
   }
+  mat-drawer-container{
+     .aside-list{
+      list-style-type: none;
+      margin: 50px 0;
+    }
+    .aside-list li{
+      margin: 20px 0;
+      font-weight:500;
+      font-size: large;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  
+    .example-spacer {
+      flex: 1 1 auto;
+      
+    }
+    mat-drawer{
+      background-color: #406792;
+      color: aliceblue;
+    }
+    
+   
+    mat-drawer-content{
+      nav{
+        background-color: #406792 ;
+        color: aliceblue;
+      }
+    }
+  }
   

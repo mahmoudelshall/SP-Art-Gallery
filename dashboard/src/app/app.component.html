@@ -1,23 +1,43 @@
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>
-    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon> -->
-    <!-- side logo then user name then fearture (category, products, uses, orders)? -->
-    <div class="side-logo">
-      <img src="logo.png" alt="Company Logo">
+  <mat-drawer mode="side" opened class="" [class.mat-elevation-z8]="true"  >
+    <div class="side-logo p-2 mt-4 d-flex justify-content-center">
+      <img src="favicon.ico" alt="Company Logo">
     </div>
     <div class="user-name">
-      <p>Welcome, John Smith</p>
+      <p class="p-2">Welcome, John Smith</p>
     </div>
+    <hr>
     <div class="feature">
-      <ul>
-        <li>Categories</li>
-        <li>Products</li>
-        <li>Orders</li>
-        <li>Users</li>
-        <li>Costomer</li>
-
+      <ul class ="aside-list p-3">
+        <li><i class="fa fa-sitemap"></i> <span>&nbsp;&nbsp;Categories</span></li>
+        <li> <i class="fa fa-product-hunt"></i><span>&nbsp;&nbsp;Products</span></li>
+        <li> <i class="fa fa-file-text-o" aria-hidden="true"></i><span>&nbsp;&nbsp;Orders</span></li>
+        <li> <i class="fa fa-users" aria-hidden="true"></i><span>&nbsp;&nbsp;Users</span></li>
+        <li> <i class="fa fa-users" aria-hidden="true"></i><span>&nbsp;&nbsp;Costomers</span></li>
       </ul>
     </div>
      </mat-drawer>
-  <mat-drawer-content>Main content</mat-drawer-content>
+  <mat-drawer-content>
+    <nav class="navbar navbar-expand-lg navbar-dark" [class.mat-elevation-z8]="true">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Gallery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page">Home</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+              <mat-icon class="text-light">favorite</mat-icon>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+  </mat-drawer-content>
 </mat-drawer-container>

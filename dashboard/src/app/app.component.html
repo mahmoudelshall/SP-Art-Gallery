@@ -9,7 +9,7 @@
     <hr>
     <div class="feature">
       <ul class ="aside-list p-3">
-        <li><i class="fa fa-sitemap"></i> <span>&nbsp;&nbsp;Categories</span></li>
+        <li><a routerLink="categories"><i class="fa fa-sitemap"></i> <span>&nbsp;&nbsp;Categories</span></a></li>
         <li> <i class="fa fa-product-hunt"></i><span>&nbsp;&nbsp;Products</span></li>
         <li> <i class="fa fa-file-text-o" aria-hidden="true"></i><span>&nbsp;&nbsp;Orders</span></li>
         <li> <i class="fa fa-users" aria-hidden="true"></i><span>&nbsp;&nbsp;Users</span></li>
@@ -38,6 +38,6 @@
         </div>
       </div>
     </nav>
-
+   <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -18,8 +18,10 @@ export class CategoryListComponent {
     this._categorySerive.getCategories()
       .subscribe({
         next: (categories) => {
-          this.categories = categories;
-          console.log(categories);
+          //convert json to object
+           let categoryObject = JSON.parse(JSON.stringify(categories));
+           this.categories = categoryObject.data; 
+          console.log(categoryObject.data);
         },
         error: (err) => {
           alert('Some error occurred. Please try again later.')

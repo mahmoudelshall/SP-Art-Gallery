@@ -7,6 +7,9 @@ import { CategoryAddComponent } from './category-add/category-add.component';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { HttpClientModule } from '@angular/common/http';
 
+// Angular Material
+import { AngularMatModule } from 'src/app/shared/ui/angular-mat/angular-mat.module';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     CategoriesRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularMatModule
   ],
   providers: [CategoryService]
 })

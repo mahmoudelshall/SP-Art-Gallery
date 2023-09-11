@@ -18,4 +18,8 @@ export class CategoryService {
   deleteCategory(id:number): Observable<any> {
     return this._http.delete<any>(`${this.categoryApi}/${id}`);
   }
+  editCategory(id:number, body:Array<any>): Observable<any> {
+    return this._http.put<any>(`${this.categoryApi}/${id}`, [{name:'aaaaaaa'}]);
+  
+  }
 }

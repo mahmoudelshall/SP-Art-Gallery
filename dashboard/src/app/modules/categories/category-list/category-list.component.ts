@@ -1,25 +1,23 @@
 import { Component } from '@angular/core';
 import { Category } from 'src/app/core/models/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { EditDialogsComponent } from '../edit-dialogs/edit-dialogs.component';
+
 
 // // material/dialog
-// import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-// export interface DialogData {
-//   animal: string;
-//   name: string;
-// }
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent {
-  // animal: string | undefined;
-  // name: string | undefined;
 
   categories: Category[] = [];
   displayedColumns: string[] = ['id', 'name','action'];
-  constructor(private _categorySerive: CategoryService, ){  //public dialog: MatDialog
+  constructor(private _categorySerive: CategoryService, public dialog: MatDialog){ 
     this.getCategories();
   }
   getCategories(): void {
@@ -54,22 +52,9 @@ export class CategoryListComponent {
   }
 });
   }
-
-// openDialog
-// openDialog(id:number){
-
-// }
-// openDialog(): void {
-//   const dialogRef = this.dialog.open(CategoryListComponent, {
-//     data: {name: this.name, animal: this.animal},
-//   });
-
-//   dialogRef.afterClosed().subscribe(result => {
-//     console.log('The dialog was closed');
-//     this.animal = result;
-//   });
-// }
-
-
+  openDialog(cat:Category) {
+    const dialogRef = this.dialog.open(EditDialogsComponent,{ width:'50%',  data:{category :cat }});
+    
+  }
 
 }

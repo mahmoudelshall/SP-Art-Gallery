@@ -9,18 +9,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
 import { AngularMatModule } from 'src/app/shared/ui/angular-mat/angular-mat.module';
+import { EditDialogsComponent } from './edit-dialogs/edit-dialogs.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     CategoryListComponent,
-    CategoryAddComponent
+    CategoryAddComponent,
+    EditDialogsComponent
   ],
   imports: [
     CommonModule,
     CategoriesRoutingModule,
     HttpClientModule,
-    AngularMatModule
+    AngularMatModule,
+    ReactiveFormsModule,
   ],
   providers: [CategoryService]
 })

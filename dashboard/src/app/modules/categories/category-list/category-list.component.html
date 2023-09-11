@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid p-5">
     <p class="p-5 m-4" style="font-size: 1.5rem;font-weight: 500;">Categories</p>
 
     <table mat-table [dataSource]="categories" *ngIf="categories.length" class="mat-elevation-z8 demo-table">
@@ -16,13 +16,13 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let category">    
-            <button mat-icon-button color="primary" aria-label="edit">
+            <button mat-icon-button color="primary" aria-label="edit"  (click)="openDialog(category)">
             <mat-icon>edit</mat-icon>
             </button>
           <button mat-icon-button color="warn" (click)="deleteCategory(category.id)" aria-label="delete">
             <mat-icon>delete</mat-icon>
           </button>
-        
+          <!-- <button mat-button (click)="openDialog()">Launch dialog</button> -->
         </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -30,6 +30,4 @@
       </table>
       <p *ngIf="!categories.length" class="no-data">No data</p>
 </div>
-<!-- <li>
-  <button mat-raised-button (click)="openDialog()">Pick one</button>
-</li> -->
+

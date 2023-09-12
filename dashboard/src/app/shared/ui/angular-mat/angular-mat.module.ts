@@ -6,7 +6,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input'
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [],
   imports: [
@@ -19,6 +20,7 @@ import {MatInputModule} from '@angular/material/input'
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatCardModule,
   
   ],
   exports:[
@@ -30,6 +32,7 @@ import {MatInputModule} from '@angular/material/input'
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatCardModule,
   ]
 })
 export class AngularMatModule { }

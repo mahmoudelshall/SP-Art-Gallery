@@ -1,1 +1,21 @@
-<p>category-add works!</p>
+<div class="container-fluid pt-5">
+    <div class="row justify-content-center mt-5">
+        <mat-card class="col-md-6 mt-5">
+            <mat-card-title>
+              <h1>Add Category</h1>
+            </mat-card-title>
+            <mat-card-content>
+              <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex justify-content-between">
+                <mat-form-field>
+                  <input matInput placeholder="Category Name" formControlName="name">
+                  <!-- required -->
+                  <mat-error *ngIf="form.controls['name'].hasError('required')">
+                    Category Name is required.
+                  </mat-error>
+                </mat-form-field>
+                <button mat-raised-button [disabled]="form.invalid" color="primary" type="submit">Add</button>
+              </form>
+            </mat-card-content>
+          </mat-card>
+    </div>
+</div>

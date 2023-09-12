@@ -1,5 +1,11 @@
 <div class="container-fluid p-5">
-  <p class="p-5 m-4" style="font-size: 1.5rem;font-weight: 500;">Categories</p>
+  <div class="d-flex justify-content-between">
+    <p class="m-4" style="font-size: 1.5rem;font-weight: 500;">Categories</p>
+    <a mat-stroked-button color="primary" routerLink="add"  aria-label="add" class="d-flex  m-4">
+      <mat-icon>add</mat-icon>  <span> Add New</span>
+    </a>
+  </div>
+  
 
   <table mat-table [dataSource]="categories" *ngIf="categories.length" class="mat-elevation-z8 demo-table">
     <!-- id column -->
@@ -22,7 +28,6 @@
         <button mat-icon-button color="warn" (click)="deleteCategory(category.id)" aria-label="delete">
           <mat-icon>delete</mat-icon>
         </button>
-        <!-- <button mat-button (click)="openDialog()">Launch dialog</button> -->
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

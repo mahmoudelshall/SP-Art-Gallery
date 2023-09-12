@@ -15,11 +15,17 @@ export class CategoryService {
   getCategories(): Observable<Category[]> {
     return this._http.get<Category[]>(this.categoryApi);
   }
+
+  addCategory(body:any): Observable<any> {
+    return this._http.post<any>(`${this.categoryApi}`, body);
+  
+  }
+  
   deleteCategory(id:number): Observable<any> {
     return this._http.delete<any>(`${this.categoryApi}/${id}`);
   }
-  editCategory(id:number, body:Array<any>): Observable<any> {
-    return this._http.put<any>(`${this.categoryApi}/${id}`, [{name:'aaaaaaa'}]);
+  editCategory(id:number, body:any): Observable<any> {
+    return this._http.put<any>(`${this.categoryApi}/${id}`, body);
   
   }
 }

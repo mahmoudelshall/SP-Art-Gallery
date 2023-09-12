@@ -81,7 +81,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $validator=$request->validate([
-            'name' => 'string|max:100|unique:categories,name,'. $id,
+            'name' => 'required|string|max:100|unique:categories,name,'. $id,
 
         ]);  
 
@@ -93,7 +93,10 @@ class CategoryController extends Controller
             "data"=>null
         ],404);
 
-        $Category->update([ 'status' =>$request->status ]);
+        $Category->update([
+            'name' =>isset( $request->name)? $request->name:$Category['name']
+        ]);
+
 
         return response()->json([
             "status"=>true,

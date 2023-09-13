@@ -1,1 +1,38 @@
-<p>login works!</p>
+<mat-card>
+  <mat-card-title>
+    <h1>Enter Your Credentials</h1>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput placeholder="Email" formControlName="email">
+        <!-- required -->
+        <mat-error *ngIf="form.controls['email'].hasError('required')">
+          email is required.
+        </mat-error>
+        <!-- required -->
+        <mat-error *ngIf="form.controls['email'].hasError('email')">
+          email must be valid email format.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput placeholder="Password" type="password" formControlName="password">
+      
+      <!-- required -->
+      <mat-error *ngIf="form.controls['password'].hasError('required')">
+        Password is required.
+      </mat-error>
+      <!-- min length -->
+      <mat-error *ngIf="form.controls['password'].hasError('minlength')">
+        Password must be at least 6 characters long.
+      </mat-error>
+    </mat-form-field>
+      <button mat-raised-button [disabled]="form.invalid" color="primary" type="submit">
+        <mat-icon>key</mat-icon>
+        Login
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

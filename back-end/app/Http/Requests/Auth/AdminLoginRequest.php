@@ -38,14 +38,24 @@ class AdminLoginRequest extends FormRequest
 
             if (!$auth) throw new \Exception('Invalid credentials');
             if (auth()->user()->roles!=="admin") throw new \Exception('Invalid admin user');
-
-            return [
+            $data = [
                 'token' => auth()->user()->createToken('auth_token')->plainTextToken,
+                'name' => auth()->user()->name,
+                'roles' => auth()->user()->roles,
             ];
+            return response()->json([
+            'success' => true,
+            'message' => 'User logged in successfully',
+            "errors"=>null,
+            'data' => $data,
+        ], 200);
+         
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
+                "errors"=>$e->getMessage(),
+                'data' => null,
             ], 401);
         }
     }

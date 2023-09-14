@@ -49,6 +49,11 @@ export class LoginComponent {
       .subscribe({
         next: (res) => {
           console.log(res);
+          let resObject = JSON.parse(JSON.stringify(res));
+          // store token & name in loaclstorage
+          if(!resObject.data.token) throw "Login failed!!!!";
+          
+          localStorage.setItem('UD', JSON.stringify(resObject.data));
           this.success = 'Login successful!'
           this._router.navigate(['/categories']);
         },

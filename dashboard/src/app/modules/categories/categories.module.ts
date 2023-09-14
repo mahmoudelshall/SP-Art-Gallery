@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularMatModule } from 'src/app/shared/ui/angular-mat/angular-mat.module';
 import { EditDialogsComponent } from './edit-dialogs/edit-dialogs.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @NgModule({
@@ -28,4 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [CategoryService]
 })
-export class CategoriesModule { }
+export class CategoriesModule {
+  constructor(private _authservice: AuthService){
+    this._authservice.fallbackRoles(["admin"]);
+  }
+}

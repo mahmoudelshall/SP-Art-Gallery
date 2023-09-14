@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMatModule } from './shared/ui/angular-mat/angular-mat.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -23,4 +25,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+
+  constructor(private _authservice: AuthService){
+    this._authservice.fallbackRoles(["admin"]);
+  }
+ }

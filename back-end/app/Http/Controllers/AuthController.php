@@ -32,16 +32,18 @@ class AuthController extends Controller
             'data' => $auth,
         ], 200);
         
+        
     }
     public function AdminLogin(AdminLoginRequest $request)
     {
         $auth = $request->AdminLogin();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'User logged in successfully',
-            'data' => $auth,
-        ], 200);
+        return $auth;
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'User logged in successfully',
+        //     'data' => $auth,
+        // ], 200);
         
     }
     // user->tokens()->delete(); 

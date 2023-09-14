@@ -41,7 +41,7 @@ Route::group(
 
 
                 // categories
-                Route::apiResource('categories', CategoryController::class);//->middleware(['auth:sanctum','AdminMiddleware']);
+                Route::apiResource('categories', CategoryController::class)->middleware(['auth:sanctum','AdminMiddleware']);
 
                 // products
                 Route::apiResource('products', ProductController::class)->middleware(['auth:sanctum','AdminMiddleware']);

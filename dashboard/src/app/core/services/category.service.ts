@@ -27,19 +27,18 @@ export class CategoryService {
   }
    
   getCategories(): Observable<Category[]> {
-    console.log(this.headers)
     return this._http.get<Category[]>(this.categoryApi, { headers: this.headers });
   }
-
-  addCategory(body: any): Observable<any> {
-    return this._http.post<any>(`${this.categoryApi}`, body, { headers: this.headers });
-
+  getOneCategory(id:number): Observable<Category> {
+    return this._http.get<Category>(`${this.categoryApi}/${id}`, { headers: this.headers });
   }
-
-  deleteCategory(id: number): Observable<any> {
+  addCategory(body: Category): Observable<Category> {
+    return this._http.post<any>(`${this.categoryApi}`, body, { headers: this.headers });
+  }
+  deleteCategory(id: number): Observable<Category> {
     return this._http.delete<any>(`${this.categoryApi}/${id}` , { headers: this.headers });
   }
-  editCategory(id: number, body: any): Observable<any> {
+  editCategory(id: number, body: Category): Observable<Category> {
     return this._http.put<any>(`${this.categoryApi}/${id}`, body , { headers: this.headers });
 
   }

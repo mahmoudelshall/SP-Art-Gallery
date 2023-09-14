@@ -10,7 +10,7 @@ import { Product } from '../models/product.model';
 export class ProductService {
 
   APP_URI = environment.apiUrl;
-  productApi = this.APP_URI + 'dashboard/Products';
+  productApi = this.APP_URI + 'dashboard/products';
   headers: HttpHeaders | undefined;
   constructor(private _http: HttpClient, private _router: Router) {
     let UD = localStorage.getItem('UD');

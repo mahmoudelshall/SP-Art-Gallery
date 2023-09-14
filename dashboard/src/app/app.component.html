@@ -11,8 +11,7 @@
       <ul class ="aside-list p-3">
         
         <li ><a routerLink="categories"><i class="fa fa-sitemap"></i> <span>&nbsp;&nbsp;Categories</span></a></li>
-        
-        <li> <i class="fa fa-product-hunt"></i><span>&nbsp;&nbsp;Products</span></li>
+        <li ><a routerLink="products"><i class="fa fa-product-hunt"></i><span>&nbsp;&nbsp;Products</span></a></li>  
         <li> <i class="fa fa-file-text-o" aria-hidden="true"></i><span>&nbsp;&nbsp;Orders</span></li>
         <li> <i class="fa fa-users" aria-hidden="true"></i><span>&nbsp;&nbsp;Users</span></li>
         <li> <i class="fa fa-users" aria-hidden="true"></i><span>&nbsp;&nbsp;Costomers</span></li>
@@ -22,7 +21,7 @@
   <mat-drawer-content>
     <nav class="navbar navbar-expand-lg navbar-dark" [class.mat-elevation-z8]="true">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Gallery</a>
+        <a class="navbar-brand" >Gallery</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,14 +31,14 @@
               <a class="nav-link active" aria-current="page">Home</a>
             </li>
           </ul>
-          <form class="d-flex">
+          <div class="d-flex">
             <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
               <mat-icon class="text-light">favorite</mat-icon>
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </nav>
    <router-outlet></router-outlet>
   </mat-drawer-content>
-</mat-drawer-container>
+</mat-drawer-container> 

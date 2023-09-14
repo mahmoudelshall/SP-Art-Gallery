@@ -6,7 +6,7 @@ export interface Product {
   stock: number;
   description?: string;
   status: boolean;
-  image: string;
+  image: string|File;
 }
 
 

@@ -17,10 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
+// // image 
+
+// Route::get('/images/{filename}', function ($filename) {
+//     $imageUrl = Storage::url('public/images/' . $filename);
+//     $mimeType = Storage::mimeType('public/images/' . $filename);
+//     return response($imageUrl, 200)->header('Content-Type', $mimeType);
+//   });
 
 Route::group(
     [

@@ -54,7 +54,11 @@ export class CategoryListComponent {
   }
   openDialog(cat: Category) {
     const dialogRef = this.dialog.open(EditDialogsComponent, { width: '50%', data: { category: cat } });
-
+    dialogRef.afterClosed().subscribe(() => {
+      this.getCategories();
+    })
   }
 
 }
+
+
